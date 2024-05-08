@@ -1,31 +1,30 @@
+import * as readline from 'readline';
 import Game from './services/Game';
 import Board from "./models/Board";
 
-const board = new Board(100, {
-    16: 6,
-    47: 26,
-    49: 11,
-    56: 53,
-    62: 19,
-    64: 60,
-    87: 24,
-    93: 73,
-    95: 75,
-    98: 78
-}, {
-    1: 38,
-    4: 14,
-    9: 31,
-    21: 42,
-    28: 84,
-    36: 44,
-    51: 67,
-    71: 91,
-    80: 100
-});
+async function getInput(question: string): Promise<string> {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
-const players = ['Player 1', 'Player 2'];
+    return new Promise<string>(resolve => {
+        rl.question(question, (answer) => {
+            rl.close();
+            resolve(answer);
+        });
+    });
+}
 
-const game = new Game(players, board);
+async function main() {
+    const size = parseInt(await getInput('Enter board size: '));
+    const snakes = JSON.parse(await getInput('Enter snakes: '));
+    const ladders = JSON.parse(await getInput('Enter ladders: '));
+    const players = JSON.parse(await getInput('Enter players: '));
+    const board = new Board(size, snakes, ladders);
+    const game = new Game(players, board);
+    game.play();
 
-game.play();
+}
+
+main();
