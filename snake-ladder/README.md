@@ -1,3 +1,5 @@
+https://workat.tech/machine-coding/practice/snake-and-ladder-problem-zgtac9lxwntg
+
 models:
 1. snake
 2. ladder
